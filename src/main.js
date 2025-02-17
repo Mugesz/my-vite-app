@@ -31,10 +31,8 @@ scene.add(ambientLight);
 
 // Create a point light
 const pointLight = new THREE.PointLight(0xffffff);
-pointLight.position.set(20, 20, 20);
+pointLight.position.set(40, 10, 40);
 scene.add(pointLight);
-
-
 
 // Animation function
 function animate() {
