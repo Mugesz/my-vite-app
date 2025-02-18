@@ -20,9 +20,10 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 camera.position.setZ(30);
 
 // Create a torus
-const geometry = new THREE.ConeGeometry( 5, 20, 32 ); 
-const material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
-const torus = new THREE.Mesh(geometry, material ); scene.add( torus );
+const geometry = new THREE.TorusGeometry( 10, 3, 16, 100 ); 
+const material = new THREE.MeshBasicMaterial( { color: 0xffff00 , wireframe:true} ); 
+const torus = new THREE.Mesh( geometry, material ); 
+scene.add( torus );
 
 // Create an ambient light for base illumination
 const ambientLight = new THREE.AmbientLight(0xffffff); // soft white light
@@ -60,7 +61,7 @@ function addStar() {
 function animate() {
   requestAnimationFrame(animate);
 
-  torus.rotation.x += 0.00;
+  torus.rotation.x += 0.005;
   torus.rotation.y += 0.00;
   torus.rotation.z += 0.01;
   renderer.render(scene, camera);
