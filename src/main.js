@@ -20,10 +20,10 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 camera.position.setZ(30);
 
 // Create a torus
-const geometry = new THREE.TorusGeometry( 10, 3, 16, 100 ); 
-const material = new THREE.MeshBasicMaterial( { color: 0xffff00 , wireframe:true} ); 
-const torus = new THREE.Mesh( geometry, material ); 
-scene.add( torus );
+const geometry = new THREE.TorusGeometry(10, 3, 16, 100);
+const material = new THREE.MeshBasicMaterial({ color: 0xff6347 });
+const torus = new THREE.Mesh(geometry, material);
+scene.add(torus);
 
 // Create an ambient light for base illumination
 const ambientLight = new THREE.AmbientLight(0xffffff); // soft white light
@@ -34,11 +34,11 @@ const pointLight = new THREE.PointLight(0xffffff);
 pointLight.position.set(10, 20, 10);
 scene.add(pointLight);
 
-//Light helper
+// Light helper
 const lightHelper = new THREE.PointLightHelper(pointLight);
 
-// grid helper
-const gridHelper = new THREE.GridHelper(200, 50);
+// Grid helper
+const gridHelper = new THREE.GridHelper(200, 100);
 
 scene.add(lightHelper, gridHelper);
 
@@ -49,21 +49,37 @@ function addStar() {
   const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
   const star = new THREE.Mesh(geometry, material);
 
-  const [x, y, z] = Array(3).fill().map(()=> THREE.MaterialLoader.randFloatSpread(100));
+  // Corrected random position generation for stars
+  const [x, y, z] = Array(3)
+    .fill()
+    .map(() => THREE.MathUtils.randFloatSpread(150));
 
-  star.position.set(x, y, z); 
+  star.position.set(x, y, z);
   scene.add(star);
-
-  Array(200).fill().forEach(addStar);
 }
+
+// Add 200 stars
+Array(200).fill().forEach(addStar);
+
+const spaceTexture = new THREE.TextureLoader().load("space.jpg");
+scene.background = spaceTexture;
 
 // Animation function
 function animate() {
   requestAnimationFrame(animate);
 
   torus.rotation.x += 0.005;
-  torus.rotation.y += 0.00;
+  torus.rotation.y += 0.0;
   torus.rotation.z += 0.01;
   renderer.render(scene, camera);
 }
 animate();
+
+// avatar
+const jeffTexture = new THREE.TextureLoader().load("moon.jpg");
+const jeff = new THREE.Mesh(
+  new THREE.BoxGeometry(3, 3, 3),
+  new THREE.MeshBasicMaterial({ map: jeffTexture })
+);
+
+scene.add(jeff)
