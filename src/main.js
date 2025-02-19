@@ -38,9 +38,9 @@ scene.add(pointLight);
 const lightHelper = new THREE.PointLightHelper(pointLight);
 
 // Grid helper
-const gridHelper = new THREE.GridHelper(200, 100);
+// const gridHelper = new THREE.GridHelper(200, 100);
 
-scene.add(lightHelper, gridHelper);
+scene.add(lightHelper);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 
@@ -82,4 +82,29 @@ const jeff = new THREE.Mesh(
   new THREE.MeshBasicMaterial({ map: jeffTexture })
 );
 
-scene.add(jeff)
+//mooon
+
+const moon = new THREE.Mesh(
+  new THREE.SphereGeometry(3, 32, 32),
+  new THREE.MeshStandardMaterial({
+    map: moonTexture,
+    normalMap: normalTexture,
+  })
+);
+
+moon.position.z = 30;
+moon.position.setX(-10);
+
+function moveCamera() {
+  const t = documoent.body.getBoundingClientRect().top;
+
+  moon.rotation.x += 0.05;
+  moon.rotation.y += 0.075;
+  moon.rotation.z + 0.05;
+
+  camera.position.z = t * -0.01;
+  camera.position.x = t * -0.0002;
+  camera.rotation.y = t * -0.0002;
+}
+
+documoent.body.onscrool = moveCamera;
